@@ -1,18 +1,18 @@
-import axios from "axios"
-export const generateQuiz = async(text:string) =>{
-    const apiUrl:string | undefined = process.env.OPEN_ROUTER_BASE_URL;
-    const apiKey:string | undefined = process.env.OPEN_ROUTER_API_KEY;
-    const aiModel:string | undefined = process.env.AI_MODEL;
+import axios from "axios";
+export const generateQuiz = async (text: string) => {
+  const apiUrl: string | undefined = process.env.OPEN_ROUTER_BASE_URL;
+  const apiKey: string | undefined = process.env.OPEN_ROUTER_API_KEY;
+  const aiModel: string | undefined = process.env.AI_MODEL;
 
-    if(!apiUrl || !aiModel || !apiKey){
-        return null
-    }
-    const reqBody = {
-        model:  aiModel,
-        messages:[
-            {
-                role: "user",
-                content: `
+  if (!apiUrl || !aiModel || !apiKey) {
+    return null;
+  }
+  const reqBody = {
+    model: aiModel,
+    messages: [
+      {
+        role: "user",
+        content: `
                 command: From the given text, create multiple-choice questions. Respond with a valid JSON object only. Do not include any explanation, markdown, or extra text of any kind. The response must start and end with a raw JSON object — nothing else.
 
 The JSON structure must be:
@@ -27,16 +27,15 @@ The JSON structure must be:
     ...
   ]
 }.
-                text: ${text}.`
-            }
-        ]
-    }
-    const response = await axios.post(apiUrl,reqBody,{
-        headers:{
-            Authorization: `Bearer ${apiKey}`,
-           "Content-Type": "application/json",
-        }
-    })
-   return response.data.choices[0].message.content || null
-
-}
+                text: ${text}.`,
+      },
+    ],
+  };
+  const response = await axios.post(apiUrl, reqBody, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data.choices[0].message.content || null;
+};
