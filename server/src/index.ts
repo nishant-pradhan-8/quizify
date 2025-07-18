@@ -31,7 +31,4 @@ app.use(limiter);
 
 app.use('/quiz', quizRoutes)
 
-app.listen(PORT, () => {
-    console.log(`Server Started Running on Port ${PORT}`);
-});
-
+export default app;
