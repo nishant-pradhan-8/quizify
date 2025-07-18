@@ -8,9 +8,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 const app:Express = express();
 const corsOptions = {
-    origin: ['http://localhost:3000', !process.env.ORIGIN],
-    methods: ['POST']
-
+  origin: (['http://localhost:3000', process.env.ORIGIN].filter(Boolean) as string[]),
+  methods: ['POST']
 }
 const limiter = rateLimit({
     windowMs: 60 * 60 * 1000, 

@@ -7,9 +7,14 @@ export const ImageToText = async(file: Express.Multer.File):Promise<string|null>
         filename: file.originalname,
         contentType: file.mimetype
       });
-      
+      const ocrBaseUrl: string | undefined = process.env.OCR_SPACE_BASE_URL;
+ 
+    if(!ocrBaseUrl)
+      {
+        return null
+      }
 
-    const response:AxiosResponse<any, any> = await axios.post(process.env.OCR_SPACE_BASE_URL!, formData, {
+    const response:AxiosResponse<any, any> = await axios.post(ocrBaseUrl, formData, {
       headers: {
         'apiKey':process.env.OCR_SPACE_API_KEY
       }
